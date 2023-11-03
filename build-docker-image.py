@@ -6,10 +6,10 @@ import typer
 def build_docker_image(
     path: Annotated[
         str,
-        typer.Option("--path", "-p", help="The directory or URL of a build context"),
+        typer.Argument(help="The directory or URL of a build context"),
     ] = "cam-python",
     push: Annotated[
-        bool, typer.Option(help="Whether to push the image to the Docker Hub")
+        bool, typer.Option("--push", "-p", help="Whether to push the image to the Docker Hub")
     ] = False,
     user: Annotated[
         str,
