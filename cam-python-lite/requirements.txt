@@ -1,0 +1,8 @@
+autopep8
+black
+ipykernel
+ipywidgets
+jupyterlab>=4
+pytest
+pytest-cov
+pytest-mock
