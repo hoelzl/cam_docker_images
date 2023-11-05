@@ -43,9 +43,16 @@ def build_docker_image(
     if not yes:
         typer.confirm("Do you want to continue?", abort=True)
 
-    run(["docker", "build", "--tag", f"{image_name}:{tag}", path])
+    build_result = run(["docker", "build", "--tag", f"{image_name}:{tag}", path])
+    if build_result.returncode != 0:
+        typer.echo("Building the image failed.", err=True)
+        raise typer.Exit(code=build_result.returncode)
+
     if latest:
-        run(["docker", "tag", f"{image_name}:{tag}", f"{image_name}:latest"])
+        tag_result = run(["docker", "tag", f"{image_name}:{tag}", f"{image_name}:latest"])
+        if tag_result.returncode != 0:
+            typer.echo("Tagging the image failed.", err=True)
+            raise typer.Exit(code=tag_result.returncode)
 
     if push:
         typer.echo(f"Pushing {image_name}:{tag}{latest_msg} to Docker Hub")
