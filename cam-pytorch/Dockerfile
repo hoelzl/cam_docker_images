@@ -2,6 +2,7 @@ FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-devel
 LABEL authors="Matthias Hölzl <matthias.hoelzl@coding-academy.com>"
 
 COPY requirements.txt /tmp
+RUN apt-get update && apt-get upgrade -y && apt-get install -y git curl && apt-get clean
 RUN pip install --upgrade pip && pip install -r /tmp/requirements.txt && pip cache purge
 
 EXPOSE 7860
